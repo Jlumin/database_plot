@@ -110,7 +110,7 @@ title1 = ['tempeture','Atmospheric pressure','Humidity','Wind speed','Wind direa
 unit1 = ['degree Celsius','hpa','%','m/s','direation','mm']
 for i in range(wea_rel.shape[1]):
     if i !=4:
-        y=wea_adj[i]
+        y=wea_adj[i].astype(float).values
         x1=pd.to_datetime(wea['time'],format= '%Y%m%d%H%M%S')
 #        plt.scatter(x1,y,c='m',s='30',alpha= .5,maker= 'D')
         plt.plot(x1,y,color='#900302',marker='+',linestyle='-')
@@ -118,8 +118,6 @@ for i in range(wea_rel.shape[1]):
         plt.ylabel(unit1[i], fontdict = {'fontsize':14})
         plt.title(title1[i], fontdict = {'fontsize':14})
         plt.xticks(rotation = 30)
-        plt.yticks([])
-        plt.xticks([])
 #     plt.yticks(float(min(y)),float(max(y)),20)
         plt.savefig('./'+file_name+'/'+title1[i]+'.png', dpi= 300)
 #       #  new_tick = np.linspace(int(min(y)),int(max(y)),20)
@@ -145,7 +143,7 @@ title2 = ['Ozone','Fumes','Hydrogen Sulfide','Ammonia','Carbon monoxide','Nitrog
 unit2 = ['Voltage','Voltage','Voltage','ppm','ppm','ppm','ppm','ppm','ppm','ppm','ppm','μg/m3','μg/m3','μg/m3']
 # 
 for i in range(air_rel.shape[1]):
-     y=air_adj[i]
+     y=air_adj[i].astype(float).values
      x2=pd.to_datetime(air_qu['time'],format= '%Y%m%d%H%M%S')
      aa=plt.plot(x2,y,'bo')
      plt.xlabel('time', fontdict = {'fontsize':14})
@@ -154,8 +152,6 @@ for i in range(air_rel.shape[1]):
      plt.xticks(rotation = 30)
 #     plt.gca().set(ylim=(float(min(y)),float(max(y))))
 #     plt.set_yticks(y[::30])
-     plt.yticks([])
-     plt.xticks([])
 #     plt.yticks(float(min(y)),float(max(y)),20)
      plt.savefig('./'+file_name+'/'+title2[i]+'.png', dpi= 300)
      plt.show()
