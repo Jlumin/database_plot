@@ -13,7 +13,9 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import pandas as pd
 from datetime import datetime
+from numpy import * 
 import numpy as np
+
 from windrose import WindroseAxes
 from matplotlib.font_manager import FontProperties
 from matplotlib.image import BboxImage
@@ -23,7 +25,7 @@ from matplotlib.transforms import Bbox,TransformedBbox
 # #id = input("輸入id:")
 id = '4008'
 #date = input("請輸入日期:")
-date = '20190903'
+date = '20191027'
 #pull the csv from database
 # 
 url='http://ec2-54-175-179-28.compute-1.amazonaws.com/get_csv_xitou.php?device_id='+str(id)+'&year_month='+str(date)
@@ -60,7 +62,7 @@ urllib.request.urlretrieve(server_path,'./'+file_name+'/'+file_name+'.csv')
 #資料整理
 
 local_csv_pos = './'+file_name+'/'+file_name+'.csv'
-
+#local_csv_pos = "./"
 colum_id = ['id','time','weather','air','acceleration']
 del_id = [0,2,4,6,8]
 csv_data = pd.read_csv(local_csv_pos,sep=", |,, | = |= ",header=None)
@@ -110,14 +112,15 @@ title1 = ['tempeture','Atmospheric pressure','Humidity','Wind speed','Wind direa
 unit1 = ['degree Celsius','hpa','%','m/s','direation','mm']
 for i in range(wea_rel.shape[1]):
     if i !=4:
-        y=wea_adj[i].astype(float).values
+        y=wea_rel[i].astype(float).values
+#        y=where(a==0.00,a, nan)
         x1=pd.to_datetime(wea['time'],format= '%Y%m%d%H%M%S')
 #        plt.scatter(x1,y,c='m',s='30',alpha= .5,maker= 'D')
-        plt.plot(x1,y,color='#900302',marker='+',linestyle='-')
+        plt.plot(x1,y,color='b',linestyle='-')
         plt.xlabel('time', fontdict = {'fontsize':14})
         plt.ylabel(unit1[i], fontdict = {'fontsize':14})
         plt.title(title1[i], fontdict = {'fontsize':14})
-        plt.xticks(rotation = 30)
+        plt.xticks(rotation = 45)
 #     plt.yticks(float(min(y)),float(max(y)),20)
         plt.savefig('./'+file_name+'/'+title1[i]+'.png', dpi= 300)
 #       #  new_tick = np.linspace(int(min(y)),int(max(y)),20)
@@ -143,13 +146,13 @@ title2 = ['Ozone','Fumes','Hydrogen Sulfide','Ammonia','Carbon monoxide','Nitrog
 unit2 = ['Voltage','Voltage','Voltage','ppm','ppm','ppm','ppm','ppm','ppm','ppm','ppm','μg/m3','μg/m3','μg/m3']
 # 
 for i in range(air_rel.shape[1]):
-     y=air_adj[i].astype(float).values
+     y=air_rel[i].astype(float).values
      x2=pd.to_datetime(air_qu['time'],format= '%Y%m%d%H%M%S')
-     aa=plt.plot(x2,y,'bo')
+     aa=plt.plot(x2,y,'b.')
      plt.xlabel('time', fontdict = {'fontsize':14})
      plt.ylabel(unit2[i], fontdict = {'fontsize':14})
      plt.title(title2[i], fontdict = {'fontsize':14})
-     plt.xticks(rotation = 30)
+     plt.xticks(rotation = 45)
 #     plt.gca().set(ylim=(float(min(y)),float(max(y))))
 #     plt.set_yticks(y[::30])
 #     plt.yticks(float(min(y)),float(max(y)),20)
@@ -158,23 +161,17 @@ for i in range(air_rel.shape[1]):
 # # =============================================================================
 # =============================================================================
 # #acceleration of the earthquake
-# =============================================================================
-# 
-# =============================================================================
-# y3=acc_rel.iloc[0]
-# x3=pd.DataFrame(y3,columns=['count','value'])
+
+y3=acc_rel.iloc[0].astype(float).values
+x3=['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30']
 # # =============================================================================
-# plt.bar(x3,y3,align='center',width=0.5)
-# plt.xlabel("(m^2/s^2)")
-# plt.ylabel("(T)")
-# plt.title("地表加速度")
-# plt.savefig('./'+file_name+'/'+'plt.png')
-# plt.show()
-# =============================================================================
-# =============================================================================
-# 
-# =============================================================================
-# =============================================================================
+plt.bar(x3,y3,width=0.5,color='b')
+plt.xlabel("class")
+plt.ylabel("counts")
+plt.title("Seismic grade")
+plt.xticks(np.arange(1,30,5))
+plt.savefig('./'+file_name+'/'+'plt.png')
+plt.show()
 
 
 
