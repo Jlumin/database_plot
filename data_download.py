@@ -20,6 +20,7 @@ from windrose import WindroseAxes
 from matplotlib.font_manager import FontProperties
 from matplotlib.image import BboxImage
 from matplotlib.transforms import Bbox,TransformedBbox
+import fileinput
 # =============================================================================
 # print('相關站號及日期輸入請閱讀下載格式說明文件')
 # #id = input("輸入id:")
@@ -62,6 +63,18 @@ urllib.request.urlretrieve(server_path,'./'+file_name+'/'+file_name+'.csv')
 #資料整理
 
 local_csv_pos = './'+file_name+'/'+file_name+'.csv'
+
+#CSV檔前處理
+    with open(local_csv_pos,'r') as f:
+    global data_fir_line
+    data_fir_line=len(f.readline())
+    print(data_fir_line)
+    if data_fir_line < 230:
+        for line in fileinput.input(local_csv_pos, inplace=1):
+            if not fileinput.isfirstline():
+                print(line.replace('\n',''))
+#進入處理檔案部分
+
 #local_csv_pos = "./"
 colum_id = ['id','time','weather','air','acceleration']
 del_id = [0,2,4,6,8]
@@ -172,19 +185,3 @@ plt.title("Seismic grade")
 plt.xticks(np.arange(1,30,5))
 plt.savefig('./'+file_name+'/'+'plt.png')
 plt.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
