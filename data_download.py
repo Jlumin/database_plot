@@ -29,7 +29,7 @@ id = '4008'
 date = '20191027'
 #pull the csv from database
 # 
-url='http://ec2-54-175-179-28.compute-1.amazonaws.com/get_csv_xitou.php?device_id='+str(id)+'&year_month='+str(date)
+url='http://www.amazonaws.com.php?device_id='+str(id)+'&year_month='+str(date)
 # print(url)
 # 
 r=requests.get(url)
@@ -48,7 +48,7 @@ get_rul_patten = doc.strip(string1).strip("<a href='")
 # 
 file_name = get_rul_patten.strip('temp_file/').strip('.csv')
 # 
-server_path="http://ec2-54-175-179-28.compute-1.amazonaws.com/"+ get_rul_patten
+server_path="www.amazonaws.com/"+ get_rul_patten
 # 
 # # =============================================================================
 # # 創建資料夾及儲存檔案
